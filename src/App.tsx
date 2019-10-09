@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import PersonList from './components/PersonList'
+import { Person } from './components/Person'
+import StartButton from "./components/StartButton";
 
 const App: React.FC = () => {
+  const [persons, setPersons] = useState<Array<Person>>([])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <>
+    <PersonList
+      persons={persons}
+      onAddPerson={() => {
+        setPersons([...persons, { name: 'undefined', id: persons.length }])
+      }}
+      onChangeNameById={(id: number) => (name: string) => {
+        const newArray = [...persons]
+        newArray[id] = {...newArray[id], name}
+        setPersons(newArray)
+      }}
+    />
+    <StartButton onClickHandler={console.log} />
+    </>
+  )
 }
 
-export default App;
+export default App
